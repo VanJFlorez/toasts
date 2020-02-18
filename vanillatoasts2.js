@@ -192,7 +192,7 @@ function getRandomInt(max) {
 	  return Math.floor(Math.random() * Math.floor(max));
 }
 
-var FIRST_TOAST_TIMEOUT = 1000 // 60000 // 1min
+var FIRST_TOAST_TIMEOUT = 1000   // 60000 // 1min
 var TOAST_INTERVAL_TIMEOUT = 1000 // 300000 // 5min
 var TOAST_ONSCREEN_TIMEOUT = 10000 // 10secs
 var TOAST_INFINITY_TIMEOUT = 9999999
@@ -201,17 +201,18 @@ function createRandomToast() {
     let url = window.location.pathname.toString();
     let tokens = url.split("/");
     do {
-      var rndNum = getRandomInt(toastMessagesNames.length - 1); // the last item is for dismissing messages.
-      var rndNum2 = getRandomInt(toastMessagesPredicates.length);
-    } while(toastMessagesNames[rndNum][0] == tokens[3])
+      var rndNum = getRandomInt(TOAST_MESSAGES.length - 1); // the last item is for dismissing messages.
+      // var rndNum2 = getRandomInt(TOAST_PREDICATES.length);
+    } while(TOAST_MESSAGES[rndNum][0] == tokens[3])
 
     VanillaToasts.create({
-        title: toastMessagesGreetings[rndNum%toastMessagesGreetings.length],
-        text: toastMessagesNames[rndNum][1],
+        title: TOAST_GREETINGS[rndNum%TOAST_GREETINGS.length],
+        // text: TOAST_PREDICATES[rndNum2] + '<a href="' + TOAST_MESSAGES[rndNum][0] + '">' + TOAST_MESSAGES[rndNum][1] + '</a>',
+        text: TOAST_MESSAGES[rndNum][1],
         type: 'info',
-        icon: toastMessagesNames[rndNum][2],
+        icon: TOAST_MESSAGES[rndNum][2],
         timeout: TOAST_ONSCREEN_TIMEOUT,
-        module: toastMessagesNames[rndNum][0]
+        module: TOAST_MESSAGES[rndNum][0]
     });
 }
 
@@ -221,13 +222,13 @@ function createDismissToast() {
     type: 'info',
     buttons: true,
     callback: function() {},
-    icon: toastMessagesNames[6][2], 
+    icon: TOAST_MESSAGES[6][2], 
     timeout: TOAST_INFINITY_TIMEOUT,
     module: "dismiss"
   });
 }
 
-function launchToast() {  
+function launchToast() {
   let timesClosed = parseInt(getCookieValue("toasts_close_counter"));
   let showToasts = (getCookieValue("toasts_show") === 'true');
   if(showToasts) {
@@ -262,7 +263,8 @@ function setCookie(name, val, expiresInSession) {
 
 /**
  * Here we launch the first toast
+ * @see MainFooter.xhtml
  */
-setTimeout(launchToast, FIRST_TOAST_TIMEOUT);
-setCookie("toasts_close_counter", 0, true);
-setCookie("toasts_show", true, true);
+// setTimeout(launchToast, FIRST_TOAST_TIMEOUT);
+// setCookie("toasts_close_counter", 0, true);
+// setCookie("toasts_show", true, true);

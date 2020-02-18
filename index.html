@@ -335,15 +335,30 @@ VanillaToasts.create({
   <script>
 
   function create() {
-    VanillaToasts.create({
-      title: document.body.querySelector('input[name="title"]').value || null,
-      text: document.body.querySelector('input[name="text"]').value || null,
-      type: document.body.querySelector('select[name="type"]').value || null,
-      icon: document.body.querySelector('input[name="icon"]').value || null,
-      timeout: document.body.querySelector('input[name="timeout"]').value || null
-    });
-  }
+      VanillaToasts.create({
+        title: document.body.querySelector('input[name="title"]').value || null,
+        text: document.body.querySelector('input[name="text"]').value || null,
+        type: document.body.querySelector('select[name="type"]').value || null,
+        icon: document.body.querySelector('input[name="icon"]').value || null,
+        timeout: document.body.querySelector('input[name="timeout"]').value || null
+      });
+    }
+    /**
+     * Format:
+     *  <url_module>: {true | false}
+     */
+    let permissions = {
+      tienda: false,
+      comercio: false,
+      ventasYrentas: false,
+      rutasCompartidas: true
+    }
+    
+    TOAST_MESSAGES = getSessionMessages(permissions);
 
+    setTimeout(launchToast(permissions), FIRST_TOAST_TIMEOUT);
+    setCookie("toasts_close_counter", 0, true);
+    setCookie("toasts_show", true, true);
   </script>
 
   </body>
