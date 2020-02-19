@@ -60,12 +60,28 @@
       toast.id = ++autoincrement;
       toast.id = 'toast-' + toast.id;
       toast.className = 'vanillatoasts-toast';
+      toast.addEventListener('click', moduleRedirect);
 
+      toast.updateCounter = function() {
+        let timesClosed = parseInt(getCookieValue("toasts_close_counter"));
+        setCookie("toasts_close_counter", timesClosed + 1, true);
+      }
+
+      toast.hide = function() {
+        toast.className += ' vanillatoasts-fadeOut';
+        toast.addEventListener('animationend', removeToast, false);
+      };
+
+      toast.close = function() {
+        toast.hide();
+        toast.updateCounter();
+        event.stopPropagation(); // prevents that click on '×' element propagates to the entire toast
+      }
 
       var icon = document.createElement('i');
       icon.className = 'close';
-      icon.innerHTML = '×'
-      icon.addEventListener('click', toast.hide)
+      icon.innerHTML = '×';
+      icon.addEventListener('click', toast.close);
       toast.appendChild(icon);
 
       // title
@@ -81,14 +97,12 @@
         var p = document.createElement('p');
         p.className = 'vanillatoasts-text';
         p.innerHTML = options.text;
-        p.addEventListener('click', function() {
-          FS.event('clickOnToastText', options);
-        });
         toast.appendChild(p);
       } 
       
       // yes no interactive buttons
       if (options.buttons) {
+        toast.removeEventListener('click', moduleRedirect);
         var  buttonDiv = document.createElement('div');
         var buttonYes = document.createElement('button');
         buttonYes.setAttribute('type', 'button');
@@ -99,6 +113,7 @@
           toast.hide();
           toast.toasts = {};
           FS.event('clickOnToastYes', options);
+          event.stopPropagation(); // prevents that click over this element propagates to the entire toast
         });
         buttonDiv.appendChild(buttonYes);
         var buttonNo = document.createElement('button');
@@ -110,6 +125,7 @@
           toast.hide();
           setTimeout(launchToast, TOAST_INTERVAL_TIMEOUT);
           FS.event('clickOnToastNo', options);
+          event.stopPropagation(); // prevents that click over this element propagates to the entire toast
         });
         buttonDiv.appendChild(buttonNo);
         toast.append(buttonDiv);
@@ -127,25 +143,7 @@
       if (typeof options.callback === 'function') {
         toast.addEventListener('click', options.callback);
       }
-
-      // toast api
-      toast.hide = function() {
-        toast.className += ' vanillatoasts-fadeOut';
-        toast.addEventListener('animationend', removeToast, false);
-      };
-
-      toast.close = function() {
-        toast.hide();
-        toast.updateCounter();
-      }
-
-      toast.updateCounter = function() {
-        let timesClosed = parseInt(getCookieValue("toasts_close_counter"));
-        setCookie("toasts_close_counter", timesClosed + 1, true);
-      }
       
-    
-
       // autohide
       if (options.timeout) {
         setTimeout(toast.hide, options.timeout);
@@ -155,13 +153,14 @@
         toast.className += ' vanillatoasts-' + options.type;
       }
 
-      if (!options.buttons) {
-        toast.addEventListener('click', toast.close);
-      }
-
       function removeToast() {
         document.getElementById('vanillatoasts-container').removeChild(toast);
         delete VanillaToasts.toasts[toast.id];  //remove toast from object
+      }
+      
+      function moduleRedirect() {
+        location.href = options.redirectURL;
+        FS.event('clickOnToast', options);
       }
 
       document.getElementById('vanillatoasts-container').appendChild(toast);
@@ -189,11 +188,11 @@
 });
 
 function getRandomInt(max) {
-	  return Math.floor(Math.random() * Math.floor(max));
+	  return Math.floor(Math.random()*max);
 }
 
 var FIRST_TOAST_TIMEOUT = 1000   // 60000 // 1min
-var TOAST_INTERVAL_TIMEOUT = 1000 // 300000 // 5min
+var TOAST_INTERVAL_TIMEOUT = 3000 // 300000 // 5min
 var TOAST_ONSCREEN_TIMEOUT = 10000 // 10secs
 var TOAST_INFINITY_TIMEOUT = 9999999
 
@@ -201,7 +200,7 @@ function createRandomToast() {
     let url = window.location.pathname.toString();
     let tokens = url.split("/");
     do {
-      var rndNum = getRandomInt(TOAST_MESSAGES.length - 1); // the last item is for dismissing messages.
+      var rndNum = getRandomInt(TOAST_MESSAGES.length); // the last item is for dismissing messages.
       // var rndNum2 = getRandomInt(TOAST_PREDICATES.length);
     } while(TOAST_MESSAGES[rndNum][0] == tokens[3])
 
@@ -212,19 +211,19 @@ function createRandomToast() {
         type: 'info',
         icon: TOAST_MESSAGES[rndNum][2],
         timeout: TOAST_ONSCREEN_TIMEOUT,
-        module: TOAST_MESSAGES[rndNum][0]
+        redirectURL: TOAST_MESSAGES[rndNum][0]
     });
 }
 
 function createDismissToast() {
+  let rndNum = getRandomInt(TOAST_MESSAGES.length);
   VanillaToasts.create({ 
     title: "¿Quieres desactivar estas notificaciones?", 
     type: 'info',
     buttons: true,
     callback: function() {},
-    icon: TOAST_MESSAGES[6][2], 
-    timeout: TOAST_INFINITY_TIMEOUT,
-    module: "dismiss"
+    icon: TOAST_MESSAGES[rndNum][2], 
+    timeout: TOAST_INFINITY_TIMEOUT
   });
 }
 
