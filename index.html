@@ -359,7 +359,7 @@ VanillaToasts.create({
     
     TOAST_MESSAGES = getSessionMessages(permissions);
 
-    setTimeout(launchToast(permissions), FIRST_TOAST_TIMEOUT);
+    setTimeout(launchToast, FIRST_TOAST_TIMEOUT);
     setCookie("toasts_close_counter", 0, true);
     setCookie("toasts_show", true, true);
   </script>

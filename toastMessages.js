@@ -63,18 +63,18 @@ function getSessionMessages(permissions) {
     }
     
     let urlgif = [
-        "https://miedificio.co/cdn/davivienda/static/core/notigifs/1.webp",
+        "https://miedificio.co/cdn/davivienda/static/core/notigifs/1.gif",
         "https://miedificio.co/cdn/davivienda/static/core/notigifs/2.gif",
         "https://miedificio.co/cdn/davivienda/static/core/notigifs/3.gif",
-        "https://miedificio.co/cdn/davivienda/static/core/notigifs/4.webp",
-        "https://miedificio.co/cdn/davivienda/static/core/notigifs/5.webp",
-        //"https://miedificio.co/cdn/davivienda/static/core/notigifs/6.webp",
-        //"https://miedificio.co/cdn/davivienda/static/core/notigifs/7.webp",
-        //"https://miedificio.co/cdn/davivienda/static/core/notigifs/8.webp",
-        "https://miedificio.co/cdn/davivienda/static/core/notigifs/9.webp",
-        //"https://miedificio.co/cdn/davivienda/static/core/notigifs/a.gif",
-        "https://miedificio.co/cdn/davivienda/static/core/notigifs/b.webp",
-        //"https://miedificio.co/cdn/davivienda/static/core/notigifs/c.gif",
+        "https://miedificio.co/cdn/davivienda/static/core/notigifs/4.gif",
+        "https://miedificio.co/cdn/davivienda/static/core/notigifs/5.gif",
+      //"https://miedificio.co/cdn/davivienda/static/core/notigifs/6.gif",
+      //"https://miedificio.co/cdn/davivienda/static/core/notigifs/7.gif",
+      //"https://miedificio.co/cdn/davivienda/static/core/notigifs/8.gif",
+        "https://miedificio.co/cdn/davivienda/static/core/notigifs/9.gif",
+      //"https://miedificio.co/cdn/davivienda/static/core/notigifs/a.gif",
+        "https://miedificio.co/cdn/davivienda/static/core/notigifs/b.gif",
+      //"https://miedificio.co/cdn/davivienda/static/core/notigifs/c.gif",
         "https://miedificio.co/cdn/davivienda/static/core/notigifs/d.gif"
     ];
 
