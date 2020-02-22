@@ -83,8 +83,7 @@ function getSessionMessages(permissions) {
     for(p in permissions) 
         if(permissions[p])
             for(msj of messageBank[p])
-                thisSessionMessages.push([p, msj, urlgif[ Math.floor(Math.random() * Math.floor(sz))]]);
-    // thisSessionMessages.push(["", "", urlgif[ Math.floor(Math.random() * Math.floor(sz))]]);
+                thisSessionMessages.push([p, msj, urlgif[ Math.floor(Math.random()*sz)]]);
 
     return thisSessionMessages;
 }

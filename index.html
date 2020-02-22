@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>VanillaToasts - Agnostic Javascript Library for Website Notifications</title>
+    <!-- <title>VanillaToasts - Agnostic Javascript Library for Website Notifications</title> -->
     
     <!-- <script src="jquery-3.3.1.min.js"></script> -->
     <script src="toastMessages.js"></script>
@@ -68,7 +68,7 @@
     <i class="fal fa-user"></i> <!-- uses light style -->
     <!--brand icon-->
     <i class="fab fa-github-square"></i> <!-- uses brands style -->
-  <a href="https://github.com/AlexKvazos/VanillaToasts"><img style="position: fixed; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a>
+  <!-- <a href="https://github.com/AlexKvazos/VanillaToasts"><img style="position: fixed; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/82b228a3648bf44fc1163ef44c62fcc60081495e/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_red_aa0000.png"></a> -->
   <style>
   /*
 Date: 17.V.2011
@@ -244,14 +244,14 @@ Author: pumbur <pumbur@pumbur.net>
   </style>
 
   <div class="container">
-    <div class="row" style="text-align:center">
+    <!-- <div class="row" style="text-align:center">
       <div class="col-md-12">
         <h1>VanillaToasts</h1>
         <h2>Agnostic Javascript Library for Website Notifications</h2>
       </div>
-    </div>
+    </div> -->
 
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-md-8 col-md-offset-2">
         <div class="well editor">
           <h3>Create Toast</h3>
@@ -292,7 +292,7 @@ Author: pumbur <pumbur@pumbur.net>
           <button class="btn btn-primary" onclick="create()">Create</button>
         </div>
       </div>
-    </div>
+    </div> -->
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
         <div class="well">
@@ -337,7 +337,7 @@ VanillaToasts.create({
 
   <script>
 
-  function create() {
+    function create() {
       VanillaToasts.create({
         title: document.body.querySelector('input[name="title"]').value || null,
         text: document.body.querySelector('input[name="text"]').value || null,
@@ -351,15 +351,15 @@ VanillaToasts.create({
      *  <url_module>: {true | false}
      */
     let permissions = {
-      tienda: true,
-      comercio: true,
-      ventasYrentas: true,
-      rutasCompartidas: true
-    }
+				tienda: false, //#{profileValidationBean.getValidateUserRole(IFuncionality.PRODUCT_LIST)}, // 'listar producto'
+				comercio: false, // #{profileValidationBean.getValidateUserRole(IFuncionality.SUPPLIER_COMMERCE_MAIN_MODULE)}, // 
+				ventasYrentas: false, // #{profileValidationBean.getValidateUserRole(IFuncionality.SALE_RENT_MAIN_MODULE)}, // 'modulo ppal de ventas y rentas'
+				rutasCompartidas: true // #{profileValidationBean.getValidateUserRole(IFuncionality.SHARED_ROUTE_LIST)} // 'listar rutas compartidas'
+		}
     
     TOAST_MESSAGES = getSessionMessages(permissions);
-
-    setTimeout(launchToast, FIRST_TOAST_TIMEOUT);
+    if(TOAST_MESSAGES.length != 0)
+      setTimeout(launchToast, FIRST_TOAST_TIMEOUT);
     setCookie("toasts_close_counter", 0, true);
     setCookie("toasts_show", true, true);
   </script>
